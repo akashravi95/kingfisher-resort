@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+    
+    <!-- Include Materialize CSS and JavaScript files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>User Table</h2>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>SL no:</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th> <!-- Add a new table header for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Use Thymeleaf to loop through and display user data -->
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">id</td>
+                    <td th:text="${user.username}">Username</td>
+                    <td th:text="${user.firstName}">First Name</td>
+                    <td th:text="${user.lastName}">Last Name</td>
+                    <td th:text="${user.email}">Email</td>
+                    <td th:text="${user.phoneNumber}">Phone Number</td>
+                    <td>
+                        <!-- Add update and delete buttons or links -->
+                        <a th:href="@{'/editUser/' + ${user.id}}" class="btn-small blue">Edit</a>
+                        <a th:href="@{'/deleteUser/' + ${user.id}}" class="btn-small red">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

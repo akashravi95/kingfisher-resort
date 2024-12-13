@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Profile</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="node_modules/mdbootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/mdbootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href="node_modules/mdbootstrap/css/style.css">
+    <style>
+       .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Container styles */
+        .container {
+            margin-top: 20px;
+        }
+
+        /* Card styles */
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 16px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        /* Alert styles */
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        /* Animation styles */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn ease 1s;
+            animation-fill-mode: forwards;
+        }
+
+      /* Custom styles for the chatbox */
+.chat-box {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-radius: 5px;
+     z-index: 9999;
+}
+
+.chat-header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+}
+
+.chat-header button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.chat-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ccc;
+}
+
+.chat-input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Styles for the toggle chat button */
+#toggle-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Bootstrap navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <i class="fas fa-crown"></i> 
+        <a class="navbar-brand" href="#">kingfisher</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Bootstrap container -->
+    <div class="container mt-4">
+        <h1 class="mb-4">Customer Profile</h1>
+        <div th:if="${customer != null}" class="fade-in">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Profile Information</h4>
+                    <p class="card-text"><strong>Username:</strong> <span th:text="${customer.username.toUpperCase()}"></span></p>
+                    <p class="card-text"><strong>First Name:</strong> <span th:text="${customer.firstName.toUpperCase()}"></span></p>
+                    <p class="card-text"><strong>Last Name:</strong> <span th:text="${customer.lastName.toUpperCase()}"></span></p>
+                    <p class="card-text"><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+                    <p class="card-text"><strong>Phone Number:</strong> <span th:text="${customer.phoneNumber}"></span></p>
+                </div>
+            </div>
+            <h2 class="mt-4">Bookings</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Check-In Date</th>
+                        <th>Check-Out Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="booking : ${bookings}">
+                        <td th:text="${booking.id}"></td>
+                        <td th:text="${#dates.format(booking.checkInDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(booking.checkOutDate, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <!-- Display "Check-In" or "Check-Out" based on the booking's status -->
+                            <span th:if="${booking.checkedIn and not booking.checkedOut}" class="text-success">Checked-In</span>
+                            <span th:if="${booking.checkedOut}" class="text-danger">Checked-Out</span>
+                            <span th:if="${not booking.checkedIn and not booking.checkedOut}" class="text-warning">Not Checked-In</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${customer == null}">
+            <p class="alert alert-danger">Customer not found.</p>
+        </div>
+    </div>
+<!-- Chatbox -->
+    <div id="chatbox" class="chat-box">
+        <div class="chat-header">
+            <h3>Customer Support</h3>
+            <button id="close-chat" class="btn btn-danger">
+                <i class="fas fa-times"></i> 
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will go here -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="form-control chat-input" id="chat-message" placeholder="Type your message...">
+            <button id="send-button" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Send
+            </button>
+        </div>
+    </div>
+    <!-- Button to toggle chatbox -->
+    <button id="toggle-chat" class="btn btn-primary">
+        <i class="fas fa-comment"></i> Chat with Us
+    </button>
+
+
+
+
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Contact Information</h5>
+                    <p><strong>Address:</strong> 123 Kingfisher, Poovar Island, Kerala, India</p>
+                    <p><strong>Phone:</strong> +917012333804</p>
+                    <p><strong>Email:</strong> info@Kingfisherresort.com</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Connect With Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>&copy; 2023 KINGFISHER Island Resort. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Bootstrap and jQuery scripts (order matters) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+        // Function to toggle chatbox visibility
+        function toggleChatbox() {
+            const chatbox = document.getElementById('chatbox');
+            chatbox.style.display = chatbox.style.display === 'block' ? 'none' : 'block';
+        }
+
+        const toggleChatButton = document.getElementById('toggle-chat');
+        toggleChatButton.addEventListener('click', toggleChatbox);
+
+        // Function to send chat message and display received message
+        function sendMessage() {
+            const chatMessageInput = document.getElementById('chat-message');
+            const message = chatMessageInput.value.trim();
+
+            if (message !== '') {
+                // Create a new message element for outgoing message
+                const chatMessages = document.getElementById('chat-messages');
+                const outgoingMessage = document.createElement('div');
+                outgoingMessage.className = 'chat-message chat-message-send';
+                outgoingMessage.innerText = message;
+
+                // Append the outgoing message to the chatbox
+                chatMessages.appendChild(outgoingMessage);
+
+                // Clear the input
+                chatMessageInput.value = '';
+
+                // Simulate a received message (you can replace this with actual server communication)
+                setTimeout(() => {
+                    const receivedMessage = document.createElement('div');
+                    receivedMessage.className = 'chat-message chat-message-receive';
+                    receivedMessage.innerText = 'This is a received message.';
+                    chatMessages.appendChild(receivedMessage);
+
+                    // Scroll to the bottom of the chatbox
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000); // Simulate a delay
+            }
+        }
+
+        const sendButton = document.getElementById('send-button');
+        sendButton.addEventListener('click', sendMessage);
+
+        // Function to close the chatbox
+        function closeChatbox() {
+            const chatbox = document.getElementById('chatbox');
+            chatbox.style.display = 'none';
+        }
+
+        const closeChatButton = document.getElementById('close-chat');
+        closeChatButton.addEventListener('click', closeChatbox);
+    </script>
+
+</body>
+</html>

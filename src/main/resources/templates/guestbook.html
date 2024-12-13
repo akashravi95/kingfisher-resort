@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Request Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+     <div class="form-container">
+        <h2>Booking Request Form</h2>
+        <form action="/submit_booking" method="post">
+            <!-- Add the hidden input for ownerId here -->
+      <div class="form-group">
+    <label for="customer_name">Customer Name</label>
+    <input type="text" id="customer_name" name="customerName" th:required="required" />
+</div>
+
+            <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" th:required="required" />
+</div>
+<div class="form-group">
+    <label for="phone_number">Phone Number</label>
+    <input type="text" id="phone_number" name="phoneNumber" th:required="required" />
+</div>
+<div class="form-group">
+    <label for="check_in_date">Check-In Date</label>
+    <input type="date" id="check_in_date" name="checkInDate" th:required="required" />
+</div>
+<div class="form-group">
+    <label for="check_out_date">Check-Out Date</label>
+    <input type="date" id="check_out_date" name="checkOutDate" th:required="required" />
+</div>
+<div class="form-group">
+            <label for="adults">Adults</label>
+            <input type="number" id="adults" name="adults" min="1" th:required="required" />
+        </div>
+
+        <div class="form-group">
+            <label for="children">Children</label>
+            <input type="number" id="children" name="children" min="0" th:required="required" />
+        </div>
+<div class="form-group">
+    <label for="room_name">Room Name</label>
+    <select id="room_name" name="roomName" th:required="required" onchange="updatePriceAndTotal()">
+        <option th:each="room : ${rooms}" th:value="${room.name}" th:text="${room.name} + ' - ' + ${room.pricePerNight} + ' per night'"></option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="special_requests">Special Requests</label>
+    <input type="text" id="special_requests" name="specialRequests" />
+</div>
+
+<div class="form-group">
+    <label for="room_price">Price per Night</label>
+    <input type="text" id="room_price" name="room_price" th:value="${rooms[0].pricePerNight}" readonly />
+</div>
+
+<div class="form-group">
+    <label for="total_price">Total Price</label>
+    <input type="text" id="total_price" name="total_price" th:value="0" readonly />
+</div>
+
+ <button type="submit" class="btn btn-warning">Submit Booking</button>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        updatePriceAndTotal();
+    });
+
+    document.getElementById("room_name").addEventListener("change", function () {
+        updatePriceAndTotal();
+    });
+
+    function updatePriceAndTotal() {
+        var roomNameSelect = document.getElementById("room_name");
+        var selectedOption = roomNameSelect.options[roomNameSelect.selectedIndex];
+        var pricePerNight = selectedOption.text.match(/\d+/)[0];
+
+        var checkInDate = new Date(document.getElementById("check_in_date").value);
+        var checkOutDate = new Date(document.getElementById("check_out_date").value);
+        var timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        var totalPrice = pricePerNight * diffDays;
+
+        document.getElementById("room_price").value = pricePerNight;
+        document.getElementById("total_price").value = totalPrice;
+    }
+</script>
+
+
+</body>
+</html>

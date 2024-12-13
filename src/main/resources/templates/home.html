@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="kingfisher" href="https://cdn-icons-png.flaticon.com/512/3362/3362417.png" type="png">
+    <title>kingfisher</title>
+
+    <!-- Add Bootstrap CSS (you should include the Bootstrap CSS and JS files) -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<!-- Add Swiper JS and CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+    <!-- Optional: Add your custom styles if needed -->
+    <style>
+        /* Custom CSS for the gallery */
+.gallery-item {
+    margin-bottom: 20px;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.1);
+    border-color: #ff5722; /* Change border color on hover */
+}
+
+.navbar-dark .navbar-brand .fas {
+        color: gold;
+        
+    }
+    .carousel-caption{
+        text-align: center;
+        bottom: 250px;
+    }
+    
+
+    .gallery-item img {
+        height: 300px; /* Adjust the height as needed */
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .icon {
+        opacity: 1;
+    }
+    /* Text fade-in animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+#feedback {
+        background-color: #f8f8f8;
+        padding: 60px 0;
+    }
+
+    .testimonial {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .testimonial img {
+        max-width: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+    }
+
+    .testimonial h5 {
+        margin-top: 20px;
+        font-size: 1.25rem;
+    }
+
+    .testimonial p {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    .navbar-brand{
+		position: relative;
+		right: 150px;
+	}
+.navbar-nav{
+	position: relative;
+ 
+  left: 150px;
+}
+
+/* Style the testimonial container */
+.testimonial {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Style the testimonial content */
+.testimonial-inner {
+    text-align: center;
+}
+
+/* Add a hover effect */
+.testimonial:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+
+
+   
+    </style>
+    
+    
+</head>
+<body >
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-crown"></i> KINGFISHER
+            </a>
+    
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.google.com/maps/place/King+fisher+boat+club/@8.3103581,77.0838402,17z/data=!3m1!4b1!4m9!3m8!1s0x3b05a999890c2de9:0xe5dba1478e6acda0!5m2!4m1!1i2!8m2!3d8.3103528!4d77.0864151!16s%2Fg%2F1hm34f7xk?entry=ttu">Locate Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Login Modal Button -->
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                    </li>
+                    <a href="/loginpage" class="btn btn-primary">Book Now</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Image Carousel (Bootstrap Carousel) -->
+   <!-- Image Carousel (Bootstrap Carousel) -->
+<div id="imageCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#imageCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#imageCarousel" data-slide-to="1"></li>
+        <li data-target="#imageCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1920/https://www.keralatourism.holiday/blog/wp-content/uploads/2019/02/Poovar-07.jpg" class="d-block w-100" alt="Image 1">
+            <div class="carousel-caption">
+                <h3>Beautiful Scenery</h3>
+                <p>Explore the natural beauty of Poovar.</p>
+             <a href="#about"><button class="btn btn-primary">Learn More</button></a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1024/https://www.keralatourism.holiday/blog/wp-content/uploads/2019/02/Poovar-06-1024x576.jpg" class="d-block w-100" alt="Image 2">
+            <div class="carousel-caption">
+                <h3>Relaxing Beaches</h3>
+                <p>Enjoy the serene beaches of Poovar.</p>
+                <a href="#about"><button class="btn btn-primary">Learn More</button></a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://keralatourism.travel/images/places-to-visit/headers/poovar-island-trivandrum-tourism-entry-fee-timings-holidays-reviews-header.jpg" class="d-block w-100" alt="Image 3">
+            <div class="carousel-caption">
+                <h3>Luxurious Resorts</h3>
+                <p>Experience world-class hospitality in Poovar.</p>
+                <a href="#about"><button class="btn btn-primary">Learn More</button></a>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+    <!-- About Us Section -->
+    <section class="about bg-light py-5" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="https://poovarboating.com/images/packages/islandresort.jpg" class="img-fluid" alt="About Us">
+                </div>
+                <div class="col-md-6">
+                    <h3>About Poovar Island Resort</h3>
+<p>Poovar Island Resort is a beautiful and tranquil destination located in the southern state of Kerala, India. It offers a unique experience for travelers seeking a peaceful and rejuvenating getaway. The resort is located on a remote, isolated island off the coast of Sri Lanka, providing guests with a secluded and serene environment to unwind and reconnect with nature.</p>
+
+<p>Poovar Island Resort is nestled amidst the natural beauty of the Poovar Estuary, where the Neyyar River meets the Arabian Sea. This pristine location provides breathtaking views and a serene atmosphere, making it an ideal escape from the hustle and bustle of city life.</p>
+
+<p>The resort offers a variety of accommodation options, including deluxe rooms, premium suites, and family suites, all designed to provide comfort and luxury to guests. Guests can explore the natural beauty of Poovar, including beautiful landscapes, lush greenery, and serene backwaters, allowing them to immerse themselves in the surrounding natural environment.</p>
+
+<p>Known for its world-class hospitality, Poovar Island Resort's staff is friendly and attentive, ensuring that guests have a memorable and enjoyable stay. The resort offers a range of activities, such as boat rides on the backwaters, nature walks, and Ayurvedic spa treatments, allowing guests to relax and rejuvenate in the lap of nature.</p>
+
+
+
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Rooms Section -->
+<section id="rooms" class="py-5">
+    <div class="container">
+        <h2 class="text-center">Accommodations at Poovar Island Resort</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="https://www.poovarislandresorts.com/images/accommodation/landcottage2.jpg" class="card-img-top" alt="Deluxe Room" style="height: 400px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Deluxe Room</h5>
+                        <p class="card-text">Indulge in luxury and comfort with our Deluxe Room. These spacious rooms offer a perfect blend of modern amenities and traditional charm. With scenic views and elegant interiors, your stay will be truly memorable.</p>
+                        <p class="card-text"><strong>Price:</strong> $150/night</p>
+                        <a href="/loginpage" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="https://www.poovarislandresorts.com/images/accommodation/premium1.jpg" class="card-img-top" alt="Premium Suite" style="height: 400px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Premium Suite</h5>
+                        <p class="card-text">Experience the epitome of luxury in our Premium Suite. These suites offer spacious living areas, stunning sea views, and a private balcony. Immerse yourself in the lap of luxury and create lasting memories.</p>
+                        <p class="card-text"><strong>Price:</strong> $250/night</p>
+                        <a href="/loginpage" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="https://www.poovarislandresorts.com/images/accommodation/floatingcottage2.jpg" class="card-img-top" alt="Family Suite" style="height: 400px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Family Suite</h5>
+                        <p class="card-text">Ideal for families, our Family Suites provide spacious and comfortable accommodations. Enjoy quality time with your loved ones in these well-appointed suites. Your family getaway awaits!</p>
+                        <p class="card-text"><strong>Price:</strong> $300/night</p>
+                        <a href="/loginpage" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="gallery bg-light py-5" id="gallery">
+    <div class="container">
+        <h1 class="text-center heading">Our Gallery</h1>
+        <div class="row">
+            <!-- Gallery Image 1 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://www.poovarislandresorts.com/images/dining/ayurveda_restaurant.jpg" alt="Gallery Image 1">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Image 2 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://www.poovarislandresorts.com/images/dining/tiffins.jpg" alt="Gallery Image 2">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Image 3 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://www.poovarislandresorts.com/images/dining/tiffins.jpg" alt="Gallery Image 3">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Image 4 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://www.poovarislandresorts.com/images/Home/accommodation.jpg" alt="Gallery Image 4">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Image 5 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://poovarboatingcruise.com/assets/images/Boating-at-Poovar-1024x600.jpg" alt="Gallery Image 5">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Image 6 -->
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="https://www.poovarbackwatercruise.com/assets/images/bg/poovar-1.png" alt="Gallery Image 6">
+                    <div class="icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section id="feedback" class="py-5">
+    <div class="container">
+        <h2 class="text-center">Customer Feedback</h2>
+        <div class="row">
+            <!-- Iterate through feedbackList in reverse order and limit to the last 3 items -->
+            <div th:each="feedback, iterStat : ${feedbackList}" 
+                 th:if="${iterStat.index >= #lists.size(feedbackList) - 3}" 
+                 class="col-md-4">
+                <div class="testimonial">
+                    <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="Customer">
+                    <!-- Access the name of the associated customer -->
+                    <h2 th:text="${feedback.customer.username.toUpperCase()}"></h2>
+                    <p th:text="${feedback.content}"></p>
+                    
+                    <div class="rating">
+                        <!-- Add conditional logic to generate star icons based on the rating -->
+                        <span th:each="i : ${#numbers.sequence(1, feedback.rating)}">
+                            <i class="fa fa-star" style="color: gold;"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Footer Section -->
+<footer class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Contact Information</h5>
+                <p><strong>Address:</strong> 123 Kingfisher, Poovar Island, Kerala, India</p>
+                <p><strong>Phone:</strong> +917012333804</p>
+                <p><strong>Email:</strong> info@Kingfisherresort.com</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Connect With Us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2023 KINGFISHER Island Resort. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login to Your Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Login Form -->
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <p class="mt-3">
+            <a href="/signup">Sign Up</a> | <!-- Link to the signup page -->
+            <a href="/forgot-password">Forgot Password</a> <!-- Link to the forgot password page -->
+        </p>
+                </div>
+            </div>
+        </div>
+    </div>
+   <script>
+    
+</script>
+
+    
+
+    <!-- Add Bootstrap JS (you should include the Bootstrap CSS and JS files) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</bodyonload="initMap()">
+</html>

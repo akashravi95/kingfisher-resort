@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <style>
+		 body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+    
+    .container {
+        margin-top: 20px;
+    }
+
+    /* Customize the colors for specific elements */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    /* Customize the table header color */
+    thead {
+        background-color: #007bff;
+        color: #fff;
+    }
+    
+	 </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		
+       <a class="navbar-brand" href="#"><h1> <i class="fas fa-crown"></i> Welcome <span th:text="__${owner.username.toUpperCase()}__"></span></h1></a>
+ 
+        <!-- Add a Logout button to the right of the navbar -->
+        <div class="ml-auto">
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container-fluid">
+        <div class="row">
+          <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 40px;">
+    <div class="position-sticky">
+        <ul class="nav flex-column">
+            <!-- Add links to your sections here with icons -->
+            <li class="nav-item">
+                <a class="nav-link" href="#homestaysCollapse">
+                    <i class="fas fa-home fa-lg"></i>
+                    <span class="ml-3">Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#roomsCollapse">
+                    <i class="fas fa-bed fa-lg"></i>
+                    <span class="ml-3">Rooms</span>
+                    
+                </a>
+            </li>
+           
+            <li class="nav-item">
+                <a class="nav-link" href="#roomBookingCollapse">
+                    <i class="fas fa-calendar-alt fa-lg"></i>
+                    <span class="ml-3">Room Booking</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#feedbackCollapse">
+                    <i class="fas fa-comments fa-lg"></i>
+                    <span class="ml-3">Feedback</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#customerCollapse">
+                    <i class="fas fa-user fa-lg"></i>
+                    <span class="ml-3">Customer</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
+
+     <div class="container">
+        <h1 class="mt-5">Accordion Cards</h1>
+
+        <!-- Accordion -->
+        <div id="accordion">
+           
+            <!-- Rooms Section -->
+            <div class="card">
+                <div class="card-header" id="roomsHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#roomsCollapse" aria-expanded="true" aria-controls="roomsCollapse">
+                            <i class="fas fa-bed"></i> Rooms
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="roomsCollapse" class="collapse" aria-labelledby="roomsHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <a th:href="@{/create-room(ownerId=${owner.id})}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Room
+                        </a>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price per Night</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Use Thymeleaf each loop to iterate over rooms -->
+                                <tr th:each="room : ${rooms}">
+                                    <td th:text="${room.name}">Room Name</td>
+                                    <td th:text="${room.description}">Description</td>
+                                    <td th:text="${room.pricePerNight}">0.00</td>
+                                    <td>
+                                        <a th:href="@{/updateroom/{id}(id=${room.id})}" class="btn btn-info">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a th:href="@{/deleteRoom/{id}(id=${room.id})}" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+       
+
+            <!-- Room Booking Section -->
+            <div class="card">
+                <div class="card-header" id="roomBookingHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#roomBookingCollapse" aria-expanded="false" aria-controls="roomBookingCollapse">
+                            <i class="fas fa-calendar-alt"></i> Room Booking
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="roomBookingCollapse" class="collapse" aria-labelledby="roomBookingHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                       
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Room ID</th>
+                                    <th>Type</th>
+                                    <th>Booked</th>
+                                    <th>Amount</th>
+                                    <th>Check-In Date</th>
+                                    <th>Check-Out Date</th>
+                                    <th>Extend</th>
+                                    <th>Change Room</th>
+                                    <th>In/Out</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Use Thymeleaf each loop to iterate over room bookings -->
+                                <tr th:each="roomBooking : ${roomBookings}">
+                                    <td th:text="${roomBooking.room.id}">Room no</td>
+                                    <td th:text="${roomBooking.room.name}">Type</td>
+                                    <td th:text="${roomBooking.customer.username}">Name</td>
+                                    <td th:text="${roomBooking.amount}">Amount</td>
+                                    <td th:text="${#dates.format(roomBooking.checkInDate, 'yyyy-MM-dd')}">Check-In Date</td>
+                                    <td th:text="${#dates.format(roomBooking.checkOutDate, 'yyyy-MM-dd')}">Check-Out Date</td>
+                                    <td>
+                                        <a th:if="${!roomBooking.checkedOut}" th:href="@{/book/extend/{id}(id=${roomBooking.id})}" class="btn btn-info">
+                                            <i class="fas fa-clock"></i> Extend
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:if="${!roomBooking.checkedOut}" th:href="@{/book/changeRoom/{id}(id=${roomBooking.id})}" class="btn btn-warning">
+                                            <i class="fas fa-exchange-alt"></i> Change Room
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form th:if="${!roomBooking.checkedIn}" th:action="@{/book/checkin/{id}(id=${roomBooking.id})}" method="post">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-sign-in-alt"></i> Check-In
+                                            </button>
+                                        </form>
+                                        <form th:if="${roomBooking.checkedIn && !roomBooking.checkedOut}" th:action="@{/book/checkout/{id}(id=${roomBooking.id})}" method="post">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="fas fa-sign-out-alt"></i> Check-Out
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/book/deleteBooking/{id}(id=${roomBooking.id})}" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+<!-- Guest Booking Section -->
+<div class="card">
+    <div class="card-header" id="guestBookingHeading">
+        <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#guestBookingCollapse" aria-expanded="false" aria-controls="guestBookingCollapse">
+                <i class="fas fa-calendar-alt"></i> Guest Booking
+            </button>
+        </h5>
+    </div>
+
+    <div id="guestBookingCollapse" class="collapse" aria-labelledby="guestBookingHeading" data-parent="#accordion">
+        <div class="card-body">
+            <div class="row mb-3">
+                <a th:href="@{/create-booking(ownerId=${owner.id})}" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Add Booking
+                </a>
+            </div>
+      <table class="table">
+    <thead>
+        <tr>
+            <th>Guest Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Check-In Date</th>
+            <th>Check-Out Date</th>
+            <th>Room Type</th>
+            <th>Special Requests</th>
+            <th>Adults</th>
+            <th>Children</th>
+            <th>Action</th> <!-- New column for the action -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Use Thymeleaf each loop to iterate over guest bookings -->
+        <tr th:each="guestBooking : ${guestBookings}">
+            <td th:text="${guestBooking.customerName}">Guest Name</td>
+            <td th:text="${guestBooking.email}">Email</td>
+            <td th:text="${guestBooking.phoneNumber}">Phone Number</td>
+            <td>
+                <span th:text="${#temporals.format(guestBooking.checkInDate, 'yyyy-MM-dd')}"></span>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(guestBooking.checkOutDate, 'yyyy-MM-dd')}"></span>
+            </td>
+            <td th:text="${guestBooking.roomName}">Room Type</td>
+            <td th:text="${guestBooking.specialRequests}">Special Requests</td>
+            <td th:text="${guestBooking.adults}">Adults</td>
+            <td th:text="${guestBooking.children}">Children</td>
+            <td>
+                <form th:action="@{/cancelBooking}" method="post"> <!-- Example action to cancel the booking -->
+                    <input type="hidden" name="bookingId" th:value="${guestBooking.id}" /> <!-- Assuming you have an id field in your entity -->
+                    <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+        </div>
+    </div>
+</div>
+
+
+            <!-- Customer Section -->
+            <div class="card">
+                <div class="card-header" id="customerHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#customerCollapse" aria-expanded="false" aria-controls="customerCollapse">
+                            <i class="fas fa-user"></i> Customer
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="customerCollapse" class="collapse" aria-labelledby="customerHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <a href="/signup" class="btn btn-success">
+                                        <i class="fas fa-plus"></i> Add Customer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <h2>User Table</h2>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>SL no:</th>
+                                        <th>Username</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user, rowStat : ${users}">
+                                        <td th:text="${rowStat.index + 1}">SL no:</td>
+                                        <td th:text="${user.username}">Username</td>
+                                        <td th:text="${user.firstName +' '+user.lastName}">Name</td>
+                                        <td th:text="${user.email}">Email</td>
+                                        <td th:text="${user.phoneNumber}">Phone Number</td>
+                                        <td>
+                                            <a th:href="@{'/editUser/' + ${user.id}}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a th:href="@{'/deleteUser/' + ${user.id}}" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="card">
+                <div class="card-header" id="feedbackHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#feedbackCollapse" aria-expanded="false" aria-controls="feedbackCollapse">
+                            <i class="fas fa-comment"></i> Feedback
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="feedbackCollapse" class="collapse" aria-labelledby="feedbackHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Feedback ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Feedback Text</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="feedback : ${feedbackList}">
+                                    <td th:text="${feedback.id}">Feedback ID</td>
+                                    <td th:text="${feedback.customer.username}">Customer Name</td>
+                                    <td th:text="${feedback.content}">Feedback Text</td>
+                                    <td>
+                                        <button class="btn btn-danger" th:attr="data-feedback-id=${feedback.id}" onclick="deleteFeedback(this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include Bootstrap JS and jQuery here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- JavaScript function for deleting feedback -->
+    <script th:inline="javascript">
+        function deleteFeedback(button) {
+            var feedbackId = button.getAttribute("data-feedback-id");
+            
+            // Confirm the deletion with the user (you can customize this alert)
+            if (confirm("Are you sure you want to delete this feedback?")) {
+                // Send a DELETE request to delete the feedback
+                fetch(`/feedback/deleteFeedback/${feedbackId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => {
+                    if (response.ok) {
+                        // Remove the row from the table if the deletion was successful
+                        button.closest("tr").remove();
+                    } else {
+                        alert("Error deleting feedback. Please try again later.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Error deleting feedback. Please try again later.");
+                });
+            }
+        }
+         $(document).ready(function () {
+        // Add a click event handler to all buttons that control accordion sections
+        $('.btn-link').click(function () {
+            // Find the parent accordion element
+            var accordion = $(this).data('parent');
+            
+            // Find the target collapse element
+            var target = $(this).data('target');
+            
+            // Check if the target element is currently collapsed
+            var isCollapsed = $(target).hasClass('show');
+            
+            // If the target element is collapsed, open it; otherwise, close it
+            if (isCollapsed) {
+                $(accordion).find('.collapse').collapse('hide');
+            }
+            $(target).collapse('toggle');
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebarToggles = document.querySelectorAll(".nav-link");
+        const collapseElements = document.querySelectorAll(".collapse");
+
+        for (let i = 0; i < sidebarToggles.length; i++) {
+            sidebarToggles[i].addEventListener("click", function () {
+                const target = this.getAttribute("href");
+
+                for (let j = 0; j < collapseElements.length; j++) {
+                    if ("#" + collapseElements[j].id === target) {
+                        if (collapseElements[j].classList.contains("show")) {
+                            collapseElements[j].classList.remove("show");
+                        } else {
+                            collapseElements[j].classList.add("show");
+                        }
+                    } else {
+                        collapseElements[j].classList.remove("show");
+                    }
+                }
+            });
+        }
+    });
+        
+    </script>
+
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
